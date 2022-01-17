@@ -30,7 +30,7 @@ const News = ({ simplified }) => {
                         filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase())} >
                         <Option value={'Cryptocurrencies'}>Cryptocurrencies</Option>
                         {
-                            data?.data?.coins.map((coin) => <Option value={coin.name}>{coin.name}</Option>)
+                            data?.data?.coins.map((coin, index) => <Option key={index} value={coin.name}>{coin.name}</Option>)
                         }
                     </Select>
                 </Col>
@@ -39,7 +39,7 @@ const News = ({ simplified }) => {
                 cryptoNews?.value?.map((news, index) => (
                     <Col xs={24} sm={12} lg={8} key={index} >
                         <Card hoverable className="news-card">
-                            <a href={news.url} target='_blank' rel='norefeerer'>
+                            <a href={news.url} target='_blank' rel='noreferrer'>
                                 <div className="news-image-container">
                                     <Title className='news-title' level={4}>{news.name}</Title>
                                     <img style={{ maxWidth: '200px', maxHeight: '100px' }} src={news?.image?.thumbnail?.contentUrl} alt={news} />

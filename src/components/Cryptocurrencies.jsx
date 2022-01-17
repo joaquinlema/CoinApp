@@ -26,16 +26,16 @@ const Cryptocurrencies = ({ simplified }) => {
         <>
             {!simplified &&
                 <div className="search-crypto">
-                    <Search placeholder="Search for crypto" onSearch={(value) => { console.log(value); setSearchTerm(value); }} enterButton />
+                    <Search placeholder="Search for crypto" onSearch={(value) => { setSearchTerm(value); }} enterButton />
                 </div>
             }
             <Row gutter={[32, 32]} className="crypto-card-container">
                 {cryptos?.map((crypto, index) => (
                     <Col key={index} xs={12} sm={12} lg={6} className="crypto-card" >
-                        <Link to={`/crypto/${crypto.id}`}>
+                        <Link to={`/crypto/${crypto.uuid}`}>
                             <Card
                                 title={`${crypto.rank}. ${crypto.name}`}
-                                extra={<img className="crypto-image" src={crypto.iconUrl} />}
+                                extra={<img className="crypto-image" src={crypto.iconUrl} alt='img' />}
                                 hoverable
                             >
                                 <p>Price: {millify(crypto.price)}</p>
