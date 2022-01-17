@@ -23,9 +23,12 @@ export const cryptoApi = createApi({
         getCryptoDetail: builder.query({
             query: (coinId) => createRequest(`/coin/${coinId}`)
         }),
+        getCryptoHistory: builder.query({
+            query: ({ coinId, timeStamp }) => createRequest(`/coin/${coinId}/history?timePeriod=${timeStamp}`)
+        }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCryptosQuery, useGetCryptoDetailQuery } = cryptoApi;
+export const { useGetCryptosQuery, useGetCryptoDetailQuery, useGetCryptoHistoryQuery } = cryptoApi;
