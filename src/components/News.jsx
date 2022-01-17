@@ -1,20 +1,40 @@
 import { LoadingOutlined } from '@ant-design/icons/lib/icons';
-import { Avatar, Card, Col, Row, Typography } from 'antd';
+import { Avatar, Card, Col, Row, Select, Typography } from 'antd';
+import { Option } from 'antd/lib/mentions';
 import Text from 'antd/lib/typography/Text';
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
+import { useGetCryptosQuery } from '../services/cryptoApi';
 import { useGetCryptosNewsQuery } from '../services/cryptoNewsApi';
 
 const { Title } = Typography;
 
 const News = ({ simplified }) => {
 
-    const { data: cryptoNews } = useGetCryptosNewsQuery({ newsCategory: 'Cryptocurrency', count: simplified ? 6 : 12 });
+    const [newsCategory, setnewsCategory] = useState('Cryptocurrency');
+    const { data: cryptoNews } = useGetCryptosNewsQuery({ newsCategory, count: simplified ? 6 : 12 });
+    const { data } = useGetCryptosQuery(100);
 
     if (!cryptoNews?.value) return <LoadingOutlined />
 
     return (
         <Row gutter={[32, 32]}>
+            {!simplified && (
+                <Col span={24}>
+                    <Select
+                        showSearch
+                        className='select-news'
+                        placeholder='Select crypto category'
+                        optionFilterProp="children"
+                        onChange={(value) => { setnewsCategory(value); }}
+                        filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase())} >
+                        <Option value={'Cryptocurrencies'}>Cryptocurrencies</Option>
+                        {
+                            data?.data?.coins.map((coin) => <Option value={coin.name}>{coin.name}</Option>)
+                        }
+                    </Select>
+                </Col>
+            )}
             {
                 cryptoNews?.value?.map((news, index) => (
                     <Col xs={24} sm={12} lg={8} key={index} >
@@ -43,7 +63,7 @@ const News = ({ simplified }) => {
                     </Col>
                 ))
             }
-        </Row>
+        </Row >
     )
 }
 

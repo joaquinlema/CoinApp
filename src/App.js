@@ -12,7 +12,7 @@ import { Space, Typography } from 'antd';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <div className='navbar'>
         <Navbar />
       </div>
